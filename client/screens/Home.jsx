@@ -4,6 +4,7 @@ import { UserContext } from '../context/User';
 
 export default function HomeScreen() {
     const {user, setUser} = useContext(UserContext);
+    console.log(user);
 
     return (
         <SafeAreaView>

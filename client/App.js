@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, Portal } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import LoginStack from './stacks/LoginStack';
 import DashboardStack from './stacks/DashboardStack';
 
 import { UserContext } from './context/User';
+import Toast from 'react-native-toast-message';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +25,7 @@ export default function App() {
     <PaperProvider>
       <NavigationContainer>
         <UserContext.Provider value={{user,setUser}}>
-          
+          <Portal><Toast /></Portal>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             {user ? DashboardStack(Stack) : LoginStack(Stack)}
           </Stack.Navigator>
