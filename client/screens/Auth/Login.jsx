@@ -16,7 +16,7 @@ export default function LoginScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Button mode="contained" onPress={()=>attemptLogin('TestUser01', 'password')}>Override Login</Button>
+      <Button mode="contained" onPress={()=>attemptLogin('TestUser001', 'password')}>Override Login</Button>
       <Button mode="contained" onPress={()=>navigation.navigate('Signup')}>Sign Up</Button>
     </View>
   )
