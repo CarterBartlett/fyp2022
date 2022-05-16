@@ -8,13 +8,21 @@
   },
   "dependencies": {
     "@react-navigation/native": "^6.0.10",
+    "bcrypt": "^5.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.1",
     "express": "~4.16.1",
+    "express-session": "^1.17.3",
+    "helmet": "^5.0.2",
     "http-errors": "~1.6.3",
+    "mongoose": "^6.3.3",
     "morgan": "~1.9.1",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
     "react-native-gesture-handler": "^2.4.1",
-    "react-native-paper": "^4.12.0"
+    "react-native-paper": "^4.12.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "concurrently": "^7.1.0",
