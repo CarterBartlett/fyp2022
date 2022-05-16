@@ -1,10 +1,11 @@
 const express = require('express');
 const passport = require('passport');
-var path = require('path');
+const path = require('path');
 
 const PRODUCTION = process.env.NODE_ENV==='production';
 
 module.exports = app => {
+    app.use(require('cors')())
     app.use(require('helmet')());
     app.use(require('morgan')('combined'));
     app.use(require('cookie-parser')());

@@ -9,7 +9,7 @@ export default function LoginScreen({navigation}) {
   const {user, setUser} = useContext(UserContext);
 
   async function attemptLogin(username, password) {
-    const user = await axios.post('http://localhost:3000/auth/login', {username, password});
+    const user = await axios.post('https://fyp2022-organiserapp.herokuapp.com/auth/login', {username, password});
     setUser(user);
     console.log(user);
   }
