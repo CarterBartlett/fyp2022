@@ -9,7 +9,7 @@ const SALT_WORK_FACTOR = 10; // Number of times to hash a password
 const userSchema = new Schema({
     _id: {type: String, default: uuidv4},
     username: String,
-    password: {type: String, required: [true, 'Please provide a password']},
+    password: {type: String, required: [true, 'Please provide a password'], select: false},
     firstName: String,
     lastName: String
 });
