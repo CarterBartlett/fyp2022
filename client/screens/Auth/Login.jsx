@@ -18,12 +18,17 @@ export default function LoginScreen({navigation}) {
       console.log(req.data);
       setUser(req.data);
     } catch (err) {
+      console.error(err);
       if (err.response.status=401) {
         Toast.show({
           type: 'error',
           text1: 'Invalid username/password combination.'
         })
       } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Invalid username/password combination.'
+        })
         console.error(err);
       }
     }
