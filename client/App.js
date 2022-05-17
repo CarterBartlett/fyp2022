@@ -15,6 +15,8 @@ import { UserContext } from './context/User';
 import { AppStateContext } from './context/AppState';
 import Toast from 'react-native-toast-message';
 
+import DatePicker from './components/DatePicker';
+
 const Stack = createStackNavigator();
 
 export default function App() {
