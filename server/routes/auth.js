@@ -1,5 +1,4 @@
 var express = require('express');
-const { error } = require('npmlog');
 var router = express.Router();
 const passport = require('passport');
 
@@ -26,8 +25,9 @@ router.post('/register', async (req,res) => {
             if (err) {
                 console.error(err);
                 res.status(500).send(err);
+            } else {
+                res.send(user);
             }
-            res.send(user);
         });
     } catch (err) {
         console.error(err);
