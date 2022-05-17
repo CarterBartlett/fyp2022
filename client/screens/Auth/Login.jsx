@@ -5,18 +5,20 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
 import { UserContext } from '../../context/User';
+import { AppStateContext } from '../../context/AppState';
 
 import {API_BASEPATH} from '../../consts.json';
 
 export default function LoginScreen({navigation}) {
   const {user, setUser} = useContext(UserContext);
+  const { appState, setAppState } = useContext(AppStateContext);
 
   async function attemptLogin(username, password) {
-    console.log({candidateUsername, candidatePassword, API_BASEPATH});
+    setAppState({...appState, loading: true});
     try {
       const req = await axios.post(`${API_BASEPATH}/auth/login`, {username, password});
-      console.log(req.data);
       setUser(req.data);
+      setAppState({...appState, loading: false});
     } catch (err) {
       console.error(err);
       if (err.response.status=401) {
@@ -31,6 +33,7 @@ export default function LoginScreen({navigation}) {
         })
         console.error(err);
       }
+      setAppState({...appState, loading: false});
     }
   }
 
