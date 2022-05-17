@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import { Provider as PaperProvider, Portal } from 'react-native-paper';
+import { Provider as PaperProvider, Portal, DefaultTheme } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -22,7 +22,7 @@ export default function App() {
   const providerValue = useMemo(()=> ((user,setUser)), [user, setUser]);
 
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <NavigationContainer>
         <UserContext.Provider value={{user,setUser}}>
           <Portal><Toast /></Portal>
@@ -40,8 +40,18 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    //backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#3498db',
+    //accent: '#f1c40f',
+  },
+};
