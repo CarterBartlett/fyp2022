@@ -2,15 +2,26 @@ import React, { useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Formik } from 'formik';
 import { Text, TextInput , Button, HelperText, Checkbox } from 'react-native-paper';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import {format as formatDate } from 'date-fns';
+import axios from 'axios';
 
+import {API_BASEPATH} from '../../consts.json';
 import DatePicker from '../../components/DatePicker';
 
-export default function NewTodoScreen() {
+export default function NewTodoScreen({navigation}) {
 
   const handleSubmit = async (values, formikBag) => {
-    console.log({values})
+    const due = values.due;
+    due.setSeconds(0);
+    due.setMilliseconds(0);
+    const objectToSend = {
+      title: values.title,
+      description: values.description,
+      due: values.useDueDate ? due : null
+    }
+
+    const req = axios.post(`${API_BASEPATH}/todos`, objectToSend);
+    navigation.reset({index:0, routes:[{name:'Home'}]})
   }
 
   return (

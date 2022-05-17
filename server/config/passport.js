@@ -3,7 +3,9 @@ const LocalStrategy = require('passport-local');
 
 const User = require('../models/user');
 
-passport.use(new LocalStrategy(
+passport.use('local-login', new LocalStrategy({
+        passReqToCallback: true
+    },
     (username, password, done) => {
         User.findOne({username: username}, async (err,user) => {
             if (err) return done(err);
@@ -15,11 +17,13 @@ passport.use(new LocalStrategy(
 ))
 
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    console.log('serializeUser', {user});
+    done(null, user._id);
 });
 
 passport.deserializeUser(function (id, done) {
     User.findById(id, function(err,user) {
+        console.log('deserializeUser', {user});
         done(err, user);
     });
 })

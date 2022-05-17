@@ -71,7 +71,6 @@ function DashboardScreen({navigation}) {
             {label: "Habits", icon: 'account-edit', onPress: ()=>navigation.navigate('NewHabit')}
           ]}
           onStateChange={()=>setFabOpenState(!fabOpenState)}
-          onPress={()=>console.log("onPress")}
           open={fabOpenState}
         />
       </Portal>

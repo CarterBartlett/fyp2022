@@ -15,7 +15,9 @@ import { UserContext } from './context/User';
 import { AppStateContext } from './context/AppState';
 import Toast from 'react-native-toast-message';
 
-import DatePicker from './components/DatePicker';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const Stack = createStackNavigator();
 

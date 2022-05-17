@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/',async (req,res)=>{
+  console.log({user: req.user});
   const { title, description, createdBy, due, completed, completedBy } = req.body;
   console.log({title,description});
 
