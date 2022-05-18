@@ -18,7 +18,7 @@ export default function HabitItem(props) {
     console.log(habitCount);
 
     return (
-    <View style={styles.outercontainer}>
+    <View style={[props.style, styles.outercontainer]}>
         <View style={styles.container}>
             <View style={styles.habitcountercontainer}>
                 <Text style={styles.habitcounter}>{habitCount}</Text>

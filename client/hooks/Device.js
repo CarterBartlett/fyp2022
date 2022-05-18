@@ -7,7 +7,7 @@ function getDeviceSpecs() {
 
     return { 
         window: { width, height },
-        deviceType: height < 768 ? "smartphone" : height < 1024 ? "tablet" : "desktop",
+        deviceType: width < 768 ? "smartphone" : width < 1024 ? "tablet" : "desktop",
         os: Platform.OS
     }
 }

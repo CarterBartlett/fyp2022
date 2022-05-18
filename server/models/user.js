@@ -8,7 +8,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const SALT_WORK_FACTOR = 10; // Number of times to hash a password
 
 const userSchema = new Schema({
-    _id: {type: mongoose.Types.ObjectId, default: mongoose.Types.ObjectId() },
+    //_id: {type: mongoose.Types.ObjectId, default: new mongoose.Types.ObjectId() },
     username: {type: String, unique: true, required: true},
     password: {type: String, required: [true, 'Please provide a password'], select: false},
     firstName: String,

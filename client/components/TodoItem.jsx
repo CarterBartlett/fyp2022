@@ -13,19 +13,23 @@ export default function TodoItem(props) {
     }
 
     return (
-    <View style={[styles.outercontainer, 
+    <View style={[ styles.outercontainer, 
         props.priority=='1' ? {backgroundColor: 'red'} :
         props.priority=='2' ? {backgroundColor: 'orange'} :
-        props.priority=='3' ? {backgroundColor: 'green'} : {}]}>
+        props.priority=='3' ? {backgroundColor: 'green'} : {},
+        props.style]}>
         <View style={styles.container}>
-            <Checkbox style={styles.checkbox} status={checkboxState?'checked':'unchecked'} onPress={handleCheckboxToggle} />
+            <Checkbox
+                style={styles.checkbox}
+                status={checkboxState?'checked':'unchecked'}
+                onPress={handleCheckboxToggle} />
             
-            <View>
+            <View style={styles.infoContainer}>
                 <Text style={styles.title}>{props.name}</Text>
-                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text style={styles.content}>{props.content}</Text> 
-                    {props.due && <Text style={styles.due}>Due by {formatDate(parseISO(props.due), 'eeee do MMMM')} at {formatDate(parseISO(props.due), 'K:mmaaa')}</Text>}
-                </View>
+                <Text style={styles.content}>{props.content}</Text> 
+                {props.due &&
+                    <Text style={styles.due}>Due by {formatDate(parseISO(props.due), 'eeee do MMMM')} at {formatDate(parseISO(props.due), 'K:mmaaa')}</Text>
+                }
             </View>
         </View>
     </View>
@@ -34,26 +38,19 @@ export default function TodoItem(props) {
 
 const styles = StyleSheet.create({
     outercontainer: {
-        backgroundColor: 'gray',
         paddingLeft: 20,
-        marginBottom: 1
+        marginBottom: 1,
+        backgroundColor: 'gray'
     },
     container: {
-        display: 'flex',
         backgroundColor: '#ddd',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        height: '100%'
     },
     title: {
         fontSize: 24
     },
-    content: {
-        fontSize: 12,
-        marginRight: 24
-    },
-    due: {
-        fontSize: 12
-    },
-    checkbox: {
-        
+    infoContainer: {
+        alignSelf: 'stretch'
     }
 });

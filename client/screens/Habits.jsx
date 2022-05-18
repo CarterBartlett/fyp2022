@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler'
 import axios from 'axios';
 
@@ -30,8 +31,20 @@ export default function HabitsScreen() {
   }
 
   return (
-    <ScrollView>
-      {habits && habits.map((habit,i)=><HabitItem key={i} name={habit.title} content={habit.description} count={habit.habitCount} onChange={(e)=>handleCounterChange(habit._id, e)}/>)}
+    <ScrollView style={styles.container}>
+      {habits && habits.map((habit,i)=>
+        <HabitItem
+          key={i}
+          name={habit.title}
+          content={habit.description}
+          count={habit.habitCount}
+          onChange={(e)=>handleCounterChange(habit._id, e)}
+          style={styles.HabitItem}
+          />)
+      }
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+})

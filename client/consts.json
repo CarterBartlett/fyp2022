@@ -1,4 +1,3 @@
 {
-    "API_BASEPATH": "http://localhost:3000",
-    "API_BASEPATH_UNUSED": "https://fyp2022-organiserapp.herokuapp.com"
+    "API_BASEPATH": "https://fyp2022-organiserapp.herokuapp.com"
 }
