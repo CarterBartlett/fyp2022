@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 import LoginStack from './stacks/LoginStack';
 import DashboardStack from './stacks/DashboardStack';
@@ -15,9 +15,11 @@ import { UserContext } from './context/User';
 import { AppStateContext } from './context/AppState';
 import Toast from 'react-native-toast-message';
 
-import axios from 'axios';
+import consts from './consts.json';
 
+import axios from 'axios';
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL=consts.API_BASEPATH;
 
 const Stack = createStackNavigator();
 
@@ -25,9 +27,21 @@ export default function App() {
 
   const [user, setUser] = useState(null);
   const [appState, setAppState] = useState({
-    loading: false
+    loading: true
   });
-  const providerValue = useMemo(()=> ((user,setUser)), [user, setUser]);
+
+  useEffect(async ()=>{
+    try {
+      const user = (await axios.get('/auth/user')).data;
+      if (user) {
+        setUser(user);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    setAppState({...appState, loading:false});
+  },[]);
 
   return (
     <PaperProvider theme={theme}>

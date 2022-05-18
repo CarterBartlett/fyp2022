@@ -11,7 +11,7 @@ export default function SignUpScreen({navigation}) {
 
   const handleSubmit = async (values,formikBag) => {
     const {username, firstName, lastName, email, password} = values;
-    const req = await axios.post(`${API_BASEPATH}/auth/register`, {username, password:values.password, firstName, lastName, email, password});
+    const req = await axios.post('/auth/register', {username, password:values.password, firstName, lastName, email, password});
     navigation.navigate('ConfirmAccountCreation');
   }
 

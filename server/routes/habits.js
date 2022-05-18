@@ -5,34 +5,25 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const requireLogin = require('../middlewares/requireLogin');
 
-const Todo = require('../models/todo');
+const Habit = require('../models/habit');
 
 router.patch('/:id', requireLogin, async (req,res) => {
-  const { id } = req.params;
-  const { completed, title, description } = req.body;
+    const id = new ObjectId(req.params.id);
 
-  try {
-    const todoItem = await Todo.findById(id);
+    const habit = await Habit.findById(id);
 
-    if (typeof completed!==undefined) {
-      todoItem.completed=completed;
-      todoItem.completedOn= completed ? new Date() : undefined;
+    if (req.body?.habitCount.transform) {
+        habit.habitCount += req.body.habitCount.transform;
     }
-    if (title) todoItem.title=title;
-    if (description) todoItem.description=description;
+    await habit.save();
 
-    const newTodoItem = await todoItem.save();
-    res.send(newTodoItem)
-  } catch(err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-})
+    res.send(await Habit.findById(id));
+});
 
 router.get('/', requireLogin, async (req,res) => {
   try {
-    const todos = await Todo.find(new ObjectId(req.user.id));
-    res.send(todos);
+    const habits = await Habit.find(new ObjectId(req.user.id));
+    res.send(habits);
   } catch (err) {
     console.error(err);
     res.status(500).send(err);
@@ -40,31 +31,25 @@ router.get('/', requireLogin, async (req,res) => {
 })
 
 router.post('/', requireLogin, async (req,res)=>{
-
-  const { title, description, due, completed, completedOn, priority } = req.body;
+  const { title, description } = req.body;
 
   try {
     const newEntry = _({
       title,
       description: description==='' ? undefined : description,
-      due,
-      completed,
-      completedOn,
-      priority
     })
     .omitBy(_.isNil)
-    //.omitBy(_.isEmpty)
     .value();
     newEntry.createdBy = ObjectId(req.user.id);
 
-    const todo = new Todo(newEntry);
+    const habit = new Habit(newEntry);
 
-    todo.save(err=>{
+    habit.save(err=>{
       if (err) {
         console.error(err);
         res.status(500).send(err);
       } else {
-        res.send(todo);
+        res.send(habit);
       }
     });
 

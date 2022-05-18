@@ -18,10 +18,11 @@ import SettingsScreen from '../screens/Settings/Settings';
 import { UserContext } from '../context/User';
 import { View } from 'react-native';
 import { FAB, Colors, IconButton, Portal, Text } from 'react-native-paper';
-import UseDeviceSpecs from '../hooks/Device';
 
 import {AppName} from '@env';
 import useDeviceSpecs from '../hooks/Device';
+
+import axios from 'axios';
 
 const Drawer = createDrawerNavigator();
 const notificationCount = 0; //TODO - Add notification count
@@ -90,6 +91,16 @@ function CustomDrawer(props) {
   const {user, setUser} = useContext(UserContext);
   const { navigation } = props;
   const deviceSpecs = useDeviceSpecs();
+
+  const logout = async () => {
+    try {
+      await axios.post('/auth/logout')
+      setUser(null);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <>
       <View style={{
@@ -117,15 +128,13 @@ function CustomDrawer(props) {
           <IconButton color={Colors.white} icon="cog" onPress={()=>navigation.navigate('Settings')} />
           <IconButton color={Colors.white} icon="logout" onPress={()=>{
             if (deviceSpecs.os=='web') {
-              if(confirm("You will be logged out of the application")) {
-                setUser(null);
-              }
+              if(confirm("You will be logged out of the application")) logout();
             } else {
               Alert.alert("Log Out", "You will be logged out of the application", 
                 [{
                   text: "OK",
                   style: 'destructive',
-                  onPress: ()=>setUser(null)
+                  onPress: logout
                 },{
                   text: "Cancel",
                   style: 'cancel',

@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import { format } from 'date-fns';
+import {parseISO, format as formatDate } from 'date-fns';
 
 export default function TodoItem(props) {
-    const [checkboxState, setCheckbox] = useState(false);
+    const [checkboxState, setCheckbox] = useState(props.checked);
 
     function handleCheckboxToggle() {
-        setCheckbox(!checkboxState)
+        const newCheckboxState = !checkboxState;
+        setCheckbox(newCheckboxState);
+        if (props.onCheckboxToggle) props.onCheckboxToggle(newCheckboxState);
     }
 
     return (
@@ -20,8 +22,10 @@ export default function TodoItem(props) {
             
             <View>
                 <Text style={styles.title}>{props.name}</Text>
-                <Text style={styles.content}>{props.content}</Text> 
-                {props.due && <Text style={styles.due}>Due by {format(props.due, 'dd/MM/yyyy')}</Text>}
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <Text style={styles.content}>{props.content}</Text> 
+                    {props.due && <Text style={styles.due}>Due by {formatDate(parseISO(props.due), 'eeee do MMMM')} at {formatDate(parseISO(props.due), 'K:mmaaa')}</Text>}
+                </View>
             </View>
         </View>
     </View>
@@ -43,7 +47,8 @@ const styles = StyleSheet.create({
         fontSize: 24
     },
     content: {
-        fontSize: 12
+        fontSize: 12,
+        marginRight: 24
     },
     due: {
         fontSize: 12

@@ -13,13 +13,19 @@ router.post('/login',
     }
 )
 
+router.post('/logout', (req,res)=>{
+    req.logout();
+    res.send(true);
+})
+
 router.post('/register', async (req,res) => {
     try {
+        const {username, password, firstName, lastName} = req.body;
         const user = new User({
-            username: req.body.username,
-            password: req.body.password,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
+            username,
+            password,
+            firstName,
+            lastName
         });
         user.save(err=>{
             if (err) {
@@ -35,6 +41,6 @@ router.post('/register', async (req,res) => {
     }
 });
 
-router.get('/user', (req,res) => res.send(req.user));
+router.get('/user', (req,res) => res.send(req.user ?? false));
 
 module.exports = router;

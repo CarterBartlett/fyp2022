@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const connection = require('../config/database');
 const { Schema } = mongoose;
 
-const todoSchema = new Schema({
+const habitSchema = new Schema({
     _id: {type: mongoose.Types.ObjectId, default: mongoose.Types.ObjectId() },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -13,16 +13,19 @@ const todoSchema = new Schema({
         type: Date,
         default: new Date()
     },
-    lastUpdated: Date,
-    title: String,
+    lastUpdated: {
+        type: Date
+    },
+    title: {type: String, required: true},
     description: String,
-    due: Date,
-    completed: Boolean,
-    completedOn: Date,
-    priority: {type: Number, default: 0}
+    habitCount: {
+        type: Number,
+        default: 0
+    },
+    habitLastCompleted: Date
 });
 
-todoSchema.pre('save', async function (next) {
+habitSchema.pre('save', async function (next) {
     try {
         this.lastUpdated = new Date();
         next();
@@ -32,4 +35,4 @@ todoSchema.pre('save', async function (next) {
     }
 });
 
-module.exports = connection.model('todos', todoSchema);
+module.exports = connection.model('habit', habitSchema);

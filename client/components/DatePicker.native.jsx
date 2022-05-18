@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { View } from 'react-native';
-import { Text, Button } from 'react-native-paper';
-import {format as formatDate, startOfDay} from 'date-fns';
+import { Button } from 'react-native-paper';
+import {format as startOfDay} from 'date-fns';
 
 export default function DatePickerNative(props) {
     const now = new Date();
@@ -21,7 +20,6 @@ export default function DatePickerNative(props) {
     const [displayTimePicker, setDisplayTimePicker] = useState(false);
 
     const changeValue = (e, cb=()=>{}) => {
-        console.log('onChange', e);
         const tempVal = value;
         if (e.date) {
             tempVal.setFullYear(e.date.getFullYear());
@@ -34,7 +32,6 @@ export default function DatePickerNative(props) {
             tempVal.setMilliseconds(0);
         }
         setValue(tempVal);
-        console.log({value, tempVal});
         onChange(tempVal);
         cb();
     }

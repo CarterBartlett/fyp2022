@@ -5,8 +5,14 @@ import { Text, TextInput , Button, HelperText, Checkbox } from 'react-native-pap
 import {format as formatDate } from 'date-fns';
 import axios from 'axios';
 
-import {API_BASEPATH} from '../../consts.json';
 import DatePicker from '../../components/DatePicker';
+import MultiButtonGroup from '../../components/MultiButtonGroup';
+
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  title: yup.string().min(3).required()
+});
 
 export default function NewTodoScreen({navigation}) {
 
@@ -17,13 +23,15 @@ export default function NewTodoScreen({navigation}) {
     const objectToSend = {
       title: values.title,
       description: values.description,
-      due: values.useDueDate ? due : null
+      due: values.useDueDate ? due : null,
+      priority: values.priority
     }
 
-    const req = axios.post(`${API_BASEPATH}/todos`, objectToSend);
-    navigation.reset({index:0, routes:[{name:'Home'}]})
+    const req = await axios.post('/todos', objectToSend);
+    navigation.reset({index:0, routes:[{name:'Dashboard'}]})
   }
 
+  
   return (
     <ScrollView>
       <Text>New Todo Screen</Text>
@@ -34,7 +42,8 @@ export default function NewTodoScreen({navigation}) {
           description: '',
           useDueDate: false,
           due: new Date()
-        }}>
+        }}
+        validationSchema={validationSchema}>
           {({handleChange, handleBlur, handleSubmit, values, errors, touched, isValid, dirty, setFieldValue}) => (
             <>
               <TextInput
@@ -42,12 +51,14 @@ export default function NewTodoScreen({navigation}) {
                 onBlur={handleBlur('title')}
                 value={values.title}
                 label="Title" />
+              <HelperText type="error" visible={errors.title && touched.title}>{errors.title}</HelperText>
               
               <TextInput
                 onChangeText={handleChange('description')}
                 onBlur={handleBlur('description')}
                 value={values.description}
                 label="Description" />
+              <HelperText type="error" visible={errors.description && touched.description}>{errors.description}</HelperText>
 
               <Checkbox.Item
                 label="Add Due Date?"
@@ -63,8 +74,20 @@ export default function NewTodoScreen({navigation}) {
                   values={values.due}
                 />
               </>}
-
-              <Button mode="contained" onPress={handleSubmit}>Add Task</Button>
+                
+              <Text style={{fontSize: 18}}>Set a priority level</Text>
+              <MultiButtonGroup
+                buttons={[
+                  {value:0, color:'gray'},
+                  {value:1, color:'red'},
+                  {value:2, color:'orange'},
+                  {value:3, color:'green'},
+                ]}
+                value={values.priority}
+                onChange={val=>setFieldValue('priority', val)}
+              />
+              
+              <Button mode="contained" onPress={handleSubmit} disabled={!isValid || !dirty}>Add Task</Button>
             </>
           )}
         </Formik>

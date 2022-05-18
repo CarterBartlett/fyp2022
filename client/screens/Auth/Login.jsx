@@ -16,7 +16,7 @@ export default function LoginScreen({navigation}) {
   async function attemptLogin(username, password) {
     setAppState({...appState, loading: true});
     try {
-      const req = await axios.post(`${API_BASEPATH}/auth/login`, {username, password});
+      const req = await axios.post('/auth/login', {username, password});
       setUser(req.data);
       setAppState({...appState, loading: false});
     } catch (err) {

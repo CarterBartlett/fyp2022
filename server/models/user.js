@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
+const connection = require('../config/database');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const { v4: uuidv4 } = require('uuid');
-const passport = require('passport');
+
+const uniqueValidator = require('mongoose-unique-validator');
 
 const SALT_WORK_FACTOR = 10; // Number of times to hash a password
 
 const userSchema = new Schema({
-    _id: {type: String, default: uuidv4},
-    username: String,
+    _id: {type: mongoose.Types.ObjectId, default: mongoose.Types.ObjectId() },
+    username: {type: String, unique: true, required: true},
     password: {type: String, required: [true, 'Please provide a password'], select: false},
     firstName: String,
-    lastName: String
+    lastName: String,
+    createdOn: {type: Date, default: new Date()}
 });
 
 userSchema.pre('save', async function (next) {
@@ -31,9 +33,11 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.methods.verifyPassword = async function (candidatePassword, done) {
-    const user = await User.findOne({_id:this._id}).select('password');
+    const user = await User.findById(this.id).select('password');
     return await bcrypt.compare(candidatePassword, user.password);
 }
 
-const User = mongoose.model('users', userSchema);
+userSchema.plugin(uniqueValidator);
+
+const User = connection.model('users', userSchema);
 module.exports = User;
