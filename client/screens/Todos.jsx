@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import axios from 'axios';
 import _ from 'lodash';
 
 import TodoItem from '../components/TodoItem';
+import UnifiedView from '../components/UnifiedView';
 
 import UseDeviceSpecs from '../hooks/Device';
 
@@ -27,13 +28,9 @@ export default function TodosScreen() {
         axios.patch(`/todos/${id}`, {completed: val})
     }
 
-    console.log(styles);
-
-    const ViewContainer = View;
 
     return (
-        <ScrollView>
-        <ViewContainer style={styles.container}>
+        <UnifiedView style={styles.container}>
             {todos && _(todos)
             .sortBy(v=>v.priority&&v.priority>0?v.priority:999)
             .value()
@@ -52,8 +49,7 @@ export default function TodosScreen() {
                                    deviceType=='tablet' ? '50%' : '100%'
                     }]} />
             })}
-        </ViewContainer>
-        </ScrollView>
+        </UnifiedView>
     )
 }
 
@@ -65,7 +61,7 @@ const styles = StyleSheet.create({
     },
     TodoItem: {
       flexBasis: '100%',
-      flexGrow: 1,
-      flexShrink: 1
+      flexGrow: 0,
+      flexShrink: 0
     }
   })

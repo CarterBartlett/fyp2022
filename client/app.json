@@ -3,7 +3,6 @@
     "name": "client",
     "slug": "client",
     "version": "1.0.0",
-    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -20,6 +19,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.carterbartlett.fyp2022",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

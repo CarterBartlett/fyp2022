@@ -20,7 +20,6 @@ export default function HabitsScreen() {
   }, []);
 
   const handleCounterChange = (id, e) => {
-    console.log({id, e})
     const requestBody = {
       habitCount: {
         set: e.set,

@@ -11,7 +11,6 @@ export default function NewHabitScreen() {
       title: values.title,
       description: values.description,
     }
-    console.log(objectToSend);
 
     const req = await axios.post('/habits', objectToSend);
     navigation.reset({index:0, routes:[{name:'Dashboard'}]})

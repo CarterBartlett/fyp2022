@@ -1,24 +1,34 @@
 import { useLayoutEffect, useState } from 'react';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform, useWindowDimensions } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 
-function getDeviceSpecs() {
-    const { width, height } = Dimensions.get('window');
-
-    return { 
-        window: { width, height },
-        deviceType: width < 768 ? "smartphone" : width < 1024 ? "tablet" : "desktop",
-        os: Platform.OS
-    }
-}
-
 export default function useDeviceSpecs() {
-    const [specs, setDeviceSpecs] = useState(getDeviceSpecs());
+    const [specs, setDeviceSpecs] = useState(getSpecs());
+
+    function getSpecs() {
+        return {
+            window: Dimensions.get('window'),
+            deviceType: getDeviceType(Dimensions.get('window').width),
+            os: Platform.OS,
+            netInfo: {}
+        }
+    }
+
+    function getDeviceType(width) {
+        if (width<768) return "smartphone";
+        if (width<1024) return "tablet";
+        return "desktop";
+    }
 
     useLayoutEffect(()=>{
-        function resizeHandler() {
-            setDeviceSpecs({...specs, ...getDeviceSpecs()});
+        // Window resize listener
+        function handleWindowResize(e) {
+            const { window } = e;
+            setDeviceSpecs({...specs, window});
         }
+        const dimensionsListener = Dimensions.addEventListener('change', handleWindowResize);
+
+        // Connectivity listener
         function handleConnectivityChange(state) {
             setDeviceSpecs({...specs, netInfo:{
                 isConnected: state.isConnected,
@@ -27,14 +37,16 @@ export default function useDeviceSpecs() {
                 type: state.type
             }});
         }
-
         const netInfoUnsubscribe = NetInfo.addEventListener(handleConnectivityChange);
-        if (Platform.OS==='web') window.addEventListener('resize', resizeHandler);
 
-        // Cleanup
+        // Cleanup - Remove event listener
         return () => {
-            netInfoUnsubscribe();
-            if (Platform.OS==='web') window.removeEventListener('resize', resizeHandler);
+            try {
+                if (typeof netInfoUnsubscribe !== 'undefined') netInfoUnsubscribe();
+                if (typeof dimensionListener !== 'undefined') dimensionsListener.remove();
+            } catch(err) {
+                console.error(err);
+            }
         }
     }, []);
 
