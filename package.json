@@ -1,0 +1,31 @@
+{
+  "name": "fyp2022-base",
+  "version": "1.0.0",
+  "description": "To run...",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start:all",
+    "install:all": "npm run install:server && npm run install:client",
+    "install:server": "npm --prefix server install",
+    "install:client": "npm --prefix client install",
+    "start:all": "npm install && concurrently \"npm run start:client\" \"npm run start:server\" -n \"Server,Client\" -c \"red,blue\"",
+    "start:all:dev": "npm install && concurrently \"npm run start:client:dev\" \"npm run start:server:dev\" -n \"Server,Client\" -c \"red,blue\"",
+    "start:client": "npm --prefix client start",
+    "start:client:dev": "npm --prefix client start",
+    "start:server": "npm --prefix server start",
+    "start:server:dev": "npm --prefix server start:dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarterBartlett/fyp2022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CarterBartlett/fyp2022/issues"
+  },
+  "homepage": "https://github.com/CarterBartlett/fyp2022#readme",
+  "devDependencies": {
+    "concurrently": "^7.2.0"
+  }
+}
