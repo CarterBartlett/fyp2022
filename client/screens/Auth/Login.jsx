@@ -58,7 +58,7 @@ export default function LoginScreen({navigation}) {
       <Button mode="contained" onPress={()=>attemptLogin(candidateUsername, candidatePassword)}>Log In</Button>
       <Button mode="contained" onPress={()=>navigation.navigate('Signup')}>Sign Up</Button>
 
-      <Button mode="contained" onPress={()=>attemptLogin('TestUser001', 'password')}>Login as Test User</Button>
+      {__DEV__ && <Button mode="contained" onPress={()=>attemptLogin('TestUser001', 'password')}>Login as Test User</Button>}
     </View>
   )
 }
