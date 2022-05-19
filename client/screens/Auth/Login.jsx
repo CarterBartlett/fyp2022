@@ -7,8 +7,6 @@ import Toast from 'react-native-toast-message';
 import { UserContext } from '../../context/User';
 import { AppStateContext } from '../../context/AppState';
 
-import {API_BASEPATH} from '../../consts.json';
-
 export default function LoginScreen({navigation}) {
   const {user, setUser} = useContext(UserContext);
   const { appState, setAppState } = useContext(AppStateContext);

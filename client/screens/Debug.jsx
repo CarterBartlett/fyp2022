@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import UseDeviceSpecs from '../hooks/Device';
 import { DataTable } from 'react-native-paper';
 import { UserContext } from '../context/User';
-import useDeviceSpecs from '../hooks/Device';
 
 export default function DebugScreen() {
     const deviceSpecs = UseDeviceSpecs();
@@ -16,6 +15,8 @@ export default function DebugScreen() {
     },[])
 
     if (loading) return <View><Text>Loading...</Text></View>
+
+    console.log(user);
 
     return (
         <View>
@@ -45,12 +46,20 @@ export default function DebugScreen() {
                     <DataTable.Cell>{deviceSpecs.netInfo?.type}</DataTable.Cell>
                 </DataTable.Row>
                 <DataTable.Row>
-                    <DataTable.Cell>deviceSpecs.orientation</DataTable.Cell>
-                    <DataTable.Cell>{deviceSpecs.orientation}</DataTable.Cell>
+                    <DataTable.Cell>userContext._id</DataTable.Cell>
+                    <DataTable.Cell>{user?._id}</DataTable.Cell>
                 </DataTable.Row>
                 <DataTable.Row>
-                    <DataTable.Cell>userContext.id</DataTable.Cell>
-                    <DataTable.Cell>{user?.id}</DataTable.Cell>
+                    <DataTable.Cell>userContext.username</DataTable.Cell>
+                    <DataTable.Cell>{user?.username}</DataTable.Cell>
+                </DataTable.Row>
+                <DataTable.Row>
+                    <DataTable.Cell>userContext.firstName</DataTable.Cell>
+                    <DataTable.Cell>{user?.firstName}</DataTable.Cell>
+                </DataTable.Row>
+                <DataTable.Row>
+                    <DataTable.Cell>userContext.lastName</DataTable.Cell>
+                    <DataTable.Cell>{user?.lastName}</DataTable.Cell>
                 </DataTable.Row>
             </DataTable>
         </View>

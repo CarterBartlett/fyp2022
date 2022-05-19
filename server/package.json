@@ -17,6 +17,7 @@
     "dotenv": "^16.0.1",
     "express": "~4.16.1",
     "express-session": "^1.17.3",
+    "fyp2022-base": "file:..",
     "helmet": "^5.0.2",
     "http-errors": "~1.6.3",
     "lodash": "^4.17.21",

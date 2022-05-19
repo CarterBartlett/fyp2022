@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 
 import LoginScreen from '../screens/Auth/Login';
 import SignupScreen from '../screens/Auth/Signup';

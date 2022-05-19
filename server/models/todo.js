@@ -3,7 +3,6 @@ const connection = require('../config/database');
 const { Schema } = mongoose;
 
 const todoSchema = new Schema({
-    //_id: {type: mongoose.Types.ObjectId, default: new mongoose.Types.ObjectId() },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",

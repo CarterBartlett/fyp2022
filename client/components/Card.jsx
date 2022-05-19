@@ -1,4 +1,3 @@
-import { bold } from 'cli-boxes';
 import React from 'react';
 import { View, Text } from 'react-native';
 

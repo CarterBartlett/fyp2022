@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Pressable, Text, Button, StyleSheet } from 'react-native';
+import { View, Pressable, Text, StyleSheet } from 'react-native';
 
 export default function MultiButtonGroup({buttons, onChange=()=>{}}) {
     const [selected, setSelected] = useState(0);

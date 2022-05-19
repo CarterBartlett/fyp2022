@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import { Dimensions, Platform, useWindowDimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 
 export default function useDeviceSpecs() {

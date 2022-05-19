@@ -27,7 +27,7 @@ export default function NewTodoScreen({navigation}) {
       priority: values.priority
     }
 
-    const req = await axios.post('/todos', objectToSend);
+    await axios.post('/todos', objectToSend);
     navigation.reset({index:0, routes:[{name:'Dashboard'}]})
   }
 

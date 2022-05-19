@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { StyleSheet } from 'react-native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { Alert } from 'react-native';
 
 import HomeScreen from '../screens/Home';
@@ -19,13 +19,15 @@ import { UserContext } from '../context/User';
 import { View } from 'react-native';
 import { FAB, Colors, IconButton, Portal, Text } from 'react-native-paper';
 
-import {AppName} from '@env';
+import consts from '../consts.json';
 import useDeviceSpecs from '../hooks/Device';
 
 import axios from 'axios';
 
 const Drawer = createDrawerNavigator();
 const notificationCount = 0; //TODO - Add notification count
+
+const AppName = consts.APPNAME;
 
 export default function DashboardStack(Stack) {
   return (
@@ -46,7 +48,7 @@ function DashboardScreen({navigation}) {
     <>
       <Drawer.Navigator initialRouteName="Home" drawerContent={(props)=><CustomDrawer {...props} />}
       screenOptions={{
-        headerRight: (props) => (
+        headerRight: () => (
         <IconButton
           color={notificationCount==0 ? Colors.black : Colors.green600}
           icon={
@@ -103,13 +105,7 @@ function CustomDrawer(props) {
 
   return (
     <>
-      <View style={{
-        height: 96,
-        backgroundColor: Colors.blue400,
-        marginBottom: 0,
-        padding: 12,
-        flexDirection:'column-reverse'
-      }}>
+      <View style={styles.drawerHeader}>
         <Text style={{color:Colors.white, fontSize:24}}>{AppName}</Text>
       </View>
 
@@ -117,12 +113,8 @@ function CustomDrawer(props) {
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
 
-      <View style={{
-        backgroundColor: Colors.blue400,
-        marginBottom: 0,
-        flexDirection: 'row'
-      }}>
-        <Text style={{color: Colors.white, padding: 8, flexGrow: 1, textAlignVertical: 'center'}}>Logged in as {user?.firstName}</Text>
+      <View style={styles.drawerFooter}>
+        <Text style={styles.loggedInAsText}>Logged in as {user?.firstName} {user?.lastName}</Text>
         <>
           <IconButton color={Colors.white} icon="sync" onPress={()=>console.log("Sync")} />
           <IconButton color={Colors.white} icon="cog" onPress={()=>navigation.navigate('Settings')} />
@@ -150,4 +142,23 @@ function CustomDrawer(props) {
 }
 
 const styles = StyleSheet.create({
+  drawerHeader: {
+    height: 96,
+    backgroundColor: Colors.blue400,
+    marginBottom: 0,
+    padding: 12,
+    flexDirection:'column-reverse'
+  },
+  drawerFooter: {
+    backgroundColor: Colors.blue400,
+    marginBottom: 0,
+    flexDirection: 'row'
+  },
+  loggedInAsText: {
+    color: Colors.white,
+    padding: 8,
+    flexGrow: 1,
+    marginTop: 'auto',
+    marginBottom: 'auto'
+  }
 })

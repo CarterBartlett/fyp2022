@@ -1,8 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
-    var dotenv = require('dotenv').config();
+    require('dotenv').config();
 }
-
-const connection = require('./config/database');
 
 var express = require('express');
 var app = express();
