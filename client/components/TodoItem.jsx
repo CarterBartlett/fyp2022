@@ -14,11 +14,18 @@ export default function TodoItem(props) {
 
     return (
     <View style={[ styles.outercontainer, 
-        props.priority=='1' ? {backgroundColor: 'red'} :
-        props.priority=='2' ? {backgroundColor: 'orange'} :
-        props.priority=='3' ? {backgroundColor: 'green'} : {},
+        props.priority=='1' ? {borderLeftColor: 'red'} :
+        props.priority=='2' ? {borderLeftColor: 'orange'} :
+        props.priority=='3' ? {borderLeftColor: 'green'} : 
+                              {},
         props.style]}>
-        <View style={styles.container}>
+        <View style={[
+                styles.container,
+                props.priority=='1' ? {borderLeftColor: 'red'} :
+                props.priority=='2' ? {borderLeftColor: 'orange'} :
+                props.priority=='3' ? {borderLeftColor: 'green'} : 
+                {}
+                ]}>
             <Checkbox
                 style={styles.checkbox}
                 status={checkboxState?'checked':'unchecked'}
@@ -37,15 +44,13 @@ export default function TodoItem(props) {
 }
 
 const styles = StyleSheet.create({
-    outercontainer: {
-        paddingLeft: 20,
-        marginBottom: 1,
-        backgroundColor: 'gray'
-    },
     container: {
+        marginBottom: 1,
+        backgroundColor: 'gray',
         backgroundColor: '#ddd',
         flexDirection: 'row',
-        height: '100%'
+        borderLeftWidth: 12,
+        borderLeftColor: 'gray',
     },
     title: {
         fontSize: 24

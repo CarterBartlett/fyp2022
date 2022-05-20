@@ -15,8 +15,6 @@ export default function HabitItem(props) {
         props.onChange({value: newHabitCount, ...change});
     }
 
-    console.log(habitCount);
-
     return (
     <View style={[props.style, styles.outercontainer]}>
         <View style={styles.container}>

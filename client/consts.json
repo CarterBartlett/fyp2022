@@ -1,4 +1,5 @@
 {
     "APPNAME": "LifeOrganiser",
-    "API_BASEPATH":"http://localhost:3000"
+    "API_BASEPATH": "http://localhost:3000",
+    "DISABLED_API_BASEPATH":"https://fyp2022-organiserapp.herokuapp.com"
 }

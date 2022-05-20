@@ -18,7 +18,6 @@ export default function NewHabitScreen() {
 
   return (
     <ScrollView>
-      <Text>New Habit Screen</Text>
       <Formik
         initialValues={{
           title: '',

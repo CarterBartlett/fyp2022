@@ -34,7 +34,6 @@ export default function NewTodoScreen({navigation}) {
   
   return (
     <ScrollView>
-      <Text>New Todo Screen</Text>
       <Formik
         onSubmit={handleSubmit}
         initialValues={{

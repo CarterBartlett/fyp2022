@@ -10,5 +10,5 @@ export default function UnifiedView(props) {
     if (deviceType=='desktop') {
         return <View style={props.style}>{props.children}</View>
     }
-    return <ScrollView contentStyleContainer={props.style}>{props.children}</ScrollView>
+    return <ScrollView style={props.style} contentStyleContainer={props.style}>{props.children}</ScrollView>
 }
