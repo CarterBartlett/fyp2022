@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView } from 'react-native';
 import { Text, TextInput , Button, HelperText } from 'react-native-paper';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import axios from 'axios';
 
-import {API_BASEPATH} from '../../consts.json';
+import AppStateContext from '../../context/AppState';
 
 export default function SignUpScreen({navigation}) {
+  const [appState, setAppState] = useState(AppStateContext);
 
   const handleSubmit = async (values,formikBag) => {
+    setAppState({...appState, loading: true});
     const {username, firstName, lastName, email, password} = values;
     const req = await axios.post('/auth/register', {username, password:values.password, firstName, lastName, email, password});
+    setAppState({...appState, loading: false});
     navigation.navigate('ConfirmAccountCreation');
   }
 
