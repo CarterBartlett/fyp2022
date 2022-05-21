@@ -15,7 +15,8 @@ export default function HomeScreen() {
 
     useEffect(async ()=>{
         try {
-            const req = axios.get('/summary');
+            const req = await axios.get('/summary');
+            setSummaryData(req.data);
         } catch(err) {
             console.error(err);
         }
@@ -37,15 +38,15 @@ export default function HomeScreen() {
             <Text style={styles.title}>Welcome {user?.firstName}!</Text>
             <Text style={styles.subtitle}>Here's a quick summary of things to keep an eye on...</Text>
             <View style={[{},
-                    deviceType=='smartphone' ? {
-
+                    (deviceType=='smartphone') ? {
+                        flexDirection: 'column'
                     } : {
                         flexDirection: 'row-reverse'
                     }
                 ]}>
-                <View>
+                <View style={{marginLeft: 'auto', marginRight: 'auto', marginTop: 10, marginBottom: 10}}>
                     <CircularProgressBase
-                        value={80}
+                        value={summaryData && summaryData.tasks ? (summaryData?.tasks?.complete?.total / summaryData?.tasks?.total)*100 : 0}
                         radius={150}
                         activeStrokeColor={circleColors.task.active}
                         inActiveStrokeColor={circleColors.task.inactive}
@@ -54,7 +55,7 @@ export default function HomeScreen() {
                         inActiveStrokeOpacity={0.2}
                         >
                         <CircularProgressBase
-                            value={87}
+                            value={summaryData && summaryData.todos ? (summaryData?.todos?.complete?.total / summaryData?.todos?.total)*100 : 0}
                             radius={125}
                             activeStrokeColor={circleColors.todo.active}
                             inActiveStrokeColor={circleColors.todo.inactive}
@@ -62,21 +63,27 @@ export default function HomeScreen() {
                             inActiveStrokeWidth={25}
                             inActiveStrokeOpacity={0.2}
                         >
-                            <Text style={styles.circleProgressText}>11/12 tasks</Text>
-                            <Text style={styles.circleProgressText}>11/12 todos</Text>
+                            <Text style={styles.circleProgressText}>{summaryData.tasks ? `${summaryData.tasks.complete.total}/${summaryData.tasks.total}` : 'N/A'} tasks</Text>
+                            <Text style={styles.circleProgressText}>{summaryData.todos ? `${summaryData.todos.complete.total}/${summaryData.todos.total}` : 'N/A'} todos</Text>
                         </CircularProgressBase>
                     </CircularProgressBase>
                 </View>
 
                 <View style={{flexGrow:1}}>
                     <View>
-                        <Text>Todos</Text>
-                        <Text>You have X tasks due in within the next week!</Text>
-                        <Text>You have completed X tasks!</Text>
+                        <Text style={styles.subtitle}>Todos</Text>
+                        <Text>You have {summaryData?.todos?.incomplete?.dueNextWeek} todos due in within the next week!</Text>
+                        <Text>You have completed {summaryData?.todos?.complete?.completedInLastWeek} todos in the last week!</Text>
                     </View>
 
                     <View>
-                        <Text>Habits</Text>
+                        <Text style={styles.subtitle}>Tasks</Text>
+                        <Text>You have X tasks due in within the next week!</Text>
+                        <Text>You have completed X tasks this week!</Text>
+                    </View>
+
+                    <View>
+                        <Text style={styles.subtitle}>Habits</Text>
                     </View>
                 </View>
             </View>

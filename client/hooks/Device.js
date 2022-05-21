@@ -24,7 +24,10 @@ export default function useDeviceSpecs() {
         // Window resize listener
         function handleWindowResize(e) {
             const { window } = e;
-            setDeviceSpecs({...specs, window});
+            setDeviceSpecs({...specs,
+                window,
+                deviceType: getDeviceType(e.window.width)
+            });
         }
         const dimensionsListener = Dimensions.addEventListener('change', handleWindowResize);
 

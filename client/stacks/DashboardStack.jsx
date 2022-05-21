@@ -58,7 +58,7 @@ function DashboardScreen({navigation}) {
           }
           onPress={()=>console.log('Open notifications')}/>)
       }}>
-        <Drawer.Screen name="Home" component={HomeScreen} options={{drawerIcon:(props)=><DrawerIcon icon="home" {...props} />}} />
+        <Drawer.Screen name="Home" component={HomeScreen} options={{unmountOnBlur:true,drawerIcon:(props)=><DrawerIcon icon="home" {...props} />}} />
         <Drawer.Screen name="Todo" component={TodosScreen} options={{drawerIcon:(props)=><DrawerIcon icon="checkbox-marked-circle-outline" {...props} />}}/>
         <Drawer.Screen name="Habits" component={HabitsScreen} options={{drawerIcon:(props)=><DrawerIcon icon="account-edit" {...props} />}}/>
         <Drawer.Screen name="Tasks" component={TasksScreen} options={{drawerIcon:(props)=><DrawerIcon icon="file-outline" {...props} />}}/>
