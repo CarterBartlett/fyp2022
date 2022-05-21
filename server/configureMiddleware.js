@@ -24,6 +24,7 @@ module.exports = app => {
         keys: [process.env.SESSION_SECRET],
         cookie: {secure: true, maxAge: 30 * 24 * 60 * 60 * 1000}
     }));
+    
     app.use(passport.initialize());
     app.use(passport.session());
     require('./config/passport');
