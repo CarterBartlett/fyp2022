@@ -16,8 +16,6 @@ export default function DebugScreen() {
 
     if (loading) return <View><Text>Loading...</Text></View>
 
-    console.log(user);
-
     return (
         <View>
             <DataTable>

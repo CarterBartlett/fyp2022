@@ -22,7 +22,8 @@ router.patch('/:id', requireLogin, async (req,res) => {
 
 router.get('/', requireLogin, async (req,res) => {
   try {
-    const habits = await Habit.find(new ObjectId(req.user.id));
+    const userId = new ObjectId(req.user.id);
+    const habits = await Habit.find({createdBy: userId});
     res.send(habits);
   } catch (err) {
     console.error(err);

@@ -31,7 +31,8 @@ router.patch('/:id', requireLogin, async (req,res) => {
 
 router.get('/', requireLogin, async (req,res) => {
   try {
-    const todos = await Todo.find(new ObjectId(req.user.id));
+    const userId = new ObjectId(req.user.id);
+    const todos = await Todo.find({createdBy: userId});
     res.send(todos);
   } catch (err) {
     console.error(err);
@@ -53,7 +54,6 @@ router.post('/', requireLogin, async (req,res)=>{
       priority
     })
     .omitBy(_.isNil)
-    //.omitBy(_.isEmpty)
     .value();
     newEntry.createdBy = ObjectId(req.user.id);
 

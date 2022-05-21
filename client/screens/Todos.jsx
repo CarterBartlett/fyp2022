@@ -42,6 +42,9 @@ export default function TodosScreen() {
 
     return (
         <UnifiedView style={styles.outercontainer}>
+            {todos.length==0 && <Text style={{margin:12}}>No habits found, use the "add" button in the bottom right to begin!</Text>}
+
+            {todos.length>0 && <>
             <Text style={styles.title}>Priority 1</Text>
             <View style={styles.container}>
                 {_.filter(todos, v=>v.priority==1 && !v.completed).length==0 && <Text style={styles.notaskstext}>No Tasks!</Text>}
@@ -158,11 +161,11 @@ export default function TodosScreen() {
                         due={due} 
                         style={[styles.TodoItem, {
                             flexBasis: deviceType=='desktop' ? '33.333%' :
-                                    deviceType=='tablet' ? '50%' : '100%'
+                                       deviceType=='tablet' ? '50%' : '100%'
                         }]} />
                 })}
             </View>
-
+            </>}
         </UnifiedView>
     )
 }

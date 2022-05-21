@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native';
+import { Text } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler'
 import axios from 'axios';
 
@@ -31,6 +32,7 @@ export default function HabitsScreen() {
 
   return (
     <ScrollView style={styles.container}>
+      {habits.length==0 && <Text style={{margin:12}}>No habits found, use the "add" button in the bottom right to begin!</Text>}
       {habits && habits.map((habit,i)=>
         <HabitItem
           key={i}

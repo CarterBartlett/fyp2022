@@ -30,6 +30,7 @@ const notificationCount = 0; //TODO - Add notification count
 const AppName = consts.APPNAME;
 
 export default function DashboardStack(Stack) {
+
   return (
     <Stack.Group screenOptions={{headerShown: true}}>
       <Stack.Screen name="Dashboard" component={DashboardScreen} options={{headerShown: false}} />
@@ -48,20 +49,21 @@ function DashboardScreen({navigation}) {
     <>
       <Drawer.Navigator initialRouteName="Home" drawerContent={(props)=><CustomDrawer {...props} />}
       screenOptions={{
-        headerRight: () => (
-        <IconButton
+        headerRight: () =><>
+        {__DEV__ && <IconButton
           color={notificationCount==0 ? Colors.black : Colors.green600}
           icon={
             notificationCount>=10 ? "numeric-9-plus-circle-outline" :
             notificationCount>0 && notificationCount<10 ? "numeric-"+notificationCount+"-circle-outline" :
             "bell-outline"
           }
-          onPress={()=>console.log('Open notifications')}/>)
-      }}>
+          onPress={()=>console.log('Open notifications')}/>}
+        </>
+        }}>
         <Drawer.Screen name="Home" component={HomeScreen} options={{unmountOnBlur:true,drawerIcon:(props)=><DrawerIcon icon="home" {...props} />}} />
         <Drawer.Screen name="Todo" component={TodosScreen} options={{drawerIcon:(props)=><DrawerIcon icon="checkbox-marked-circle-outline" {...props} />}}/>
         <Drawer.Screen name="Habits" component={HabitsScreen} options={{drawerIcon:(props)=><DrawerIcon icon="account-edit" {...props} />}}/>
-        <Drawer.Screen name="Tasks" component={TasksScreen} options={{drawerIcon:(props)=><DrawerIcon icon="file-outline" {...props} />}}/>
+        {__DEV__ && <Drawer.Screen name="Tasks" component={TasksScreen} options={{drawerIcon:(props)=><DrawerIcon icon="file-outline" {...props} />}}/>}
         {__DEV__ && <Drawer.Screen name="Debug" component={DebugScreen} options={{drawerIcon:(props)=><DrawerIcon icon="hammer-wrench" {...props} />}}/>}
       </Drawer.Navigator>
 
@@ -116,8 +118,8 @@ function CustomDrawer(props) {
       <View style={styles.drawerFooter}>
         <Text style={styles.loggedInAsText}>Logged in as {user?.firstName}</Text>
         <>
-          <IconButton color={Colors.white} icon="sync" onPress={()=>console.log("Sync")} />
-          <IconButton color={Colors.white} icon="cog" onPress={()=>navigation.navigate('Settings')} />
+          {__DEV__ && <IconButton color={Colors.white} icon="sync" onPress={()=>console.log("Sync")} />}
+          {__DEV__ && <IconButton color={Colors.white} icon="cog" onPress={()=>navigation.navigate('Settings')} />}
           <IconButton color={Colors.white} icon="logout" onPress={()=>{
             if (deviceSpecs.os=='web') {
               if(confirm("You will be logged out of the application")) logout();
