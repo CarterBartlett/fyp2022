@@ -33,6 +33,8 @@ export default function HomeScreen() {
         }
     }
 
+    console.log(summaryData);
+
     return (
         <UnifiedView style={styles.container}>
             <Text style={styles.title}>Welcome {user?.firstName}!</Text>
