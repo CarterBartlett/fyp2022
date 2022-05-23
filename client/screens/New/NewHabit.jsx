@@ -51,5 +51,5 @@ export default function NewHabitScreen() {
 }
 
 const validationSchema = yup.object().shape({
-  title: yup.string().min(3).required()
+  title: yup.string().min(3).required().label('Title')
 })

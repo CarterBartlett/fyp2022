@@ -30,17 +30,19 @@ export default function App() {
     loading: true
   });
 
-  useEffect(async ()=>{
-    try {
-      const user = (await axios.get('/auth/user')).data;
-      if (user) {
-        setUser(user);
+  useEffect(()=>{
+    async function fetchData() {
+      try {
+        setAppState({...appState, loading:true});
+        const res = await axios.get('/auth/user');
+        setUser(res.data);
+        setAppState({...appState, loading:false});
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
     }
-
-    setAppState({...appState, loading:false});
+    
+    fetchData();
   },[]);
 
   return (
@@ -53,7 +55,7 @@ export default function App() {
               {user ? DashboardStack(Stack) : LoginStack(Stack)}
             </Stack.Navigator>
             {appState.loading && <Portal>
-              <View style={{backgroundColor:'rgba(0,0,0,0.5)', height:'100%'}}>
+              <View style={styles.overlay}>
                 <ActivityIndicator 
                   animating={true}
                   hidesWhenStopped={false}
@@ -71,12 +73,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    //backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  overlay: {
+   backgroundColor:'rgba(0,0,0,0.5)',
+    height:'100%'
+  }
 });
 
 const theme = {

@@ -10,7 +10,7 @@ import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 
-export default  function DatePicker(props) {
+export default function DatePicker(props) {
     const { 
         mode='datetime',
         default: defaultDate=new Date(),

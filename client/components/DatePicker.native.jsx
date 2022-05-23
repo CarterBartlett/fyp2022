@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Button } from 'react-native-paper';
-import {format as startOfDay} from 'date-fns';
+import { Button, Text } from 'react-native-paper';
+import { startOfDay } from 'date-fns';
 
 export default function DatePickerNative(props) {
     const now = new Date();
@@ -15,25 +15,29 @@ export default function DatePickerNative(props) {
         minimumDate,
         maximumDate
     } = props; 
-    const [value, setValue] = useState(defaultDate);
+    const [componentValue, setComponentValue] = useState(defaultDate);
     const [displayDatePicker, setDisplayDatePicker] = useState(false);
     const [displayTimePicker, setDisplayTimePicker] = useState(false);
 
-    const changeValue = (e, cb=()=>{}) => {
-        const tempVal = value;
+    function changeValue(e) {
+        const newComponentValue = new Date(componentValue);
+
+        console.log({e});
+
         if (e.date) {
-            tempVal.setFullYear(e.date.getFullYear());
-            tempVal.setMonth(e.date.getMonth());
-            tempVal.setDate(e.date.getDate());
+            const dateVal = startOfDay(e.date);
+            newComponentValue.setFullYear(dateVal.getFullYear());
+            newComponentValue.setMonth(dateVal.getMonth());
+            newComponentValue.setDate(dateVal.getDate());
         }
         if (e.time) {
-            tempVal.setTime(e.time);
-            tempVal.setSeconds(0);
-            tempVal.setMilliseconds(0);
+            newComponentValue.setTime(e.time);
+            newComponentValue.setSeconds(0);
+            newComponentValue.setMilliseconds(0);
         }
-        setValue(tempVal);
-        onChange(tempVal);
-        cb();
+        
+        setComponentValue(newComponentValue);
+        onChange && onChange(newComponentValue);
     }
     const openDatePicker = () => {
         if (mode=='time') {
@@ -47,17 +51,15 @@ export default function DatePickerNative(props) {
     const handleBlur = (e) => {}
 
     return <>
-        <Button mode="contained" onPress={openDatePicker}>Open Datepicker</Button>
+        <Button mode="contained" onPress={openDatePicker}>Choose {mode=='time' ? 'Time' : 'Date'}</Button>
         {displayDatePicker && <DateTimePicker
             mode="date"
-            value={value}
+            value={componentValue}
             onChange={e=>{
                 setDisplayDatePicker(false);
                 if (e.type=='set') {
-                    changeValue(
-                        {date: startOfDay(e.nativeEvent.timestamp)},
-                        ()=>mode=='datetime' && setDisplayTimePicker(true)
-                    );
+                    changeValue({date: e.nativeEvent.timestamp});
+                    if (mode=='datetime') setDisplayTimePicker(true);
                 }
             }}
             minimumDate={minimumDate}
@@ -65,10 +67,10 @@ export default function DatePickerNative(props) {
             />}
         {displayTimePicker && <DateTimePicker
             mode="time"
-            value={value}
+            value={componentValue}
             onChange={e=>{
                 setDisplayTimePicker(false);
-                if (e.type=='set') changeValue({time:e.nativeEvent.timestamp.getTime()});
+                if (e.type=='set') changeValue({time:e.nativeEvent.timestamp});
             }} 
             />}
     </>

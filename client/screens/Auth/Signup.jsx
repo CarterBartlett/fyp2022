@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { Formik } from 'formik';
 import axios from 'axios';
 
-import AppStateContext from '../../context/AppState';
+import { AppStateContext } from '../../context/AppState';
 
 export default function SignUpScreen({navigation}) {
   const [appState, setAppState] = useState(AppStateContext);
@@ -20,7 +20,6 @@ export default function SignUpScreen({navigation}) {
 
   return (
     <ScrollView>
-      <Text>Sign Up</Text>
       <Formik
         initialValues={{
           username: '',
@@ -50,6 +49,14 @@ export default function SignUpScreen({navigation}) {
             label="Password"
             secureTextEntry={true} />
           <HelperText type="error" visible={errors.password && touched.password}>{errors.password}</HelperText>
+
+          <TextInput
+            onChangeText={handleChange('confirmpassword')}
+            onBlur={handleBlur('confirmpassword')}
+            value={values.confirmpassword}
+            label="Confirm Password"
+            secureTextEntry={true} />
+          <HelperText type="error" visible={errors.confirmpassword && touched.confirmpassword}>{errors.confirmpassword}</HelperText>
 
           <TextInput
             onChangeText={handleChange('firstName')}
@@ -88,9 +95,10 @@ export default function SignUpScreen({navigation}) {
 }
 
 const validationSchema = yup.object().shape({
-  username: yup.string().min(3).max(30).required(),
-  password: yup.string().min(3).max(30).required(),
-  firstName: yup.string().min(3).max(30).required(),
-  lastName: yup.string().min(3).max(30).required(),
-  email: yup.string().required().email()
+  username: yup.string().min(3).max(30).required().label('Username'),
+  password: yup.string().min(3).max(30).required().label('Password'),
+  confirmpassword: yup.string().test('password-match', 'Passwords must match', function(v){return this.parent.password==v}),
+  firstName: yup.string().min(3).max(30).required().label('First Name'),
+  lastName: yup.string().min(3).max(30).required().label('Last Name'),
+  email: yup.string().required().email().label('E-mail Address')
 });

@@ -13,13 +13,17 @@ export default function HomeScreen() {
 
     const [summaryData, setSummaryData] = useState({});
 
-    useEffect(async ()=>{
-        try {
-            const req = await axios.get('/summary');
-            setSummaryData(req.data);
-        } catch(err) {
-            console.error(err);
+    useEffect(()=>{
+        async function fetchData() {
+            try {
+                const req = await axios.get('/summary');
+                setSummaryData(req.data);
+            } catch(err) {
+                console.error(err);
+            }
         }
+
+        fetchData();
     },[]);
 
     const circleColors = {
@@ -64,7 +68,7 @@ export default function HomeScreen() {
                             inActiveStrokeOpacity={0.2}
                         >
                             <Text style={styles.circleProgressText}>{summaryData.tasks ? `${summaryData.tasks.complete.total}/${summaryData.tasks.total}` : 'N/A'} tasks</Text>
-                            <Text style={styles.circleProgressText}>{summaryData.todos ? `${summaryData.todos.complete.total}/${summaryData.todos.total}` : 'N/A'} todos</Text>
+                            <Text style={styles.circleProgressText}>{summaryData.todos ? `${summaryData.todos.complete.total}/${summaryData.todos.total}` : 'N/A'} to-dos</Text>
                         </CircularProgressBase>
                     </CircularProgressBase>
                 </View>

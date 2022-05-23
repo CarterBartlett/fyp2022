@@ -8,25 +8,32 @@ import TodoItem from '../components/TodoItem';
 import UnifiedView from '../components/UnifiedView';
 
 import UseDeviceSpecs from '../hooks/Device';
+import { AppStateContext } from '../context/AppState';
 
 export default function TodosScreen() {
     const deviceSpecs = UseDeviceSpecs();
     const { deviceType } = deviceSpecs;
 
     const [todos, setTodos] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [appState, setAppState] = useState(AppStateContext);
+    const setLoading = (loading) => setAppState({...appState, loading});
 
     const [timestamp, setTimestamp] = useState(new Date()); // Used for forcing a re-render
     const forceRerender = () => setTimestamp(new Date());
 
-    useEffect(async ()=>{
-        try {
-            const todos = await axios.get('/todos');
-            setTodos(todos.data);
-            setLoading(false);
-        } catch (err) {
-            console.error(err);
+    useEffect(()=>{
+        async function fetchData() {
+            try {
+                setLoading(true);
+                const todos = await axios.get('/todos');
+                setTodos(todos.data);
+                setLoading(false);
+            } catch (err) {
+                console.error(err);
+            }
         }
+
+        fetchData();
     }, []);
 
     const handleCheckboxToggle = (id, val) => {
@@ -38,7 +45,7 @@ export default function TodosScreen() {
         forceRerender();
     }
 
-    if (loading) return <UnifiedView><Text>Loading...</Text></UnifiedView>
+    if (appState.loading) return <UnifiedView><Text>Loading...</Text></UnifiedView>
 
     return (
         <UnifiedView style={styles.outercontainer}>

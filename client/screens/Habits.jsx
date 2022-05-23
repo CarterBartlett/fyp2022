@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler'
 import axios from 'axios';
+import UnifiedView from '../components/UnifiedView';
 
 import HabitItem from '../components/HabitItem'
 
@@ -10,14 +11,19 @@ export default function HabitsScreen() {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(async ()=>{
-    try {
-      const habits = await axios.get('/habits');
-      setHabits(habits.data);
-      setLoading(false);
-    } catch(err) {
-      console.error(err);
+  useEffect(()=>{
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const habits = await axios.get('/habits');
+        setHabits(habits.data);
+        setLoading(false);
+      } catch(err) {
+        console.error(err);
+      }
     }
+
+    fetchData();
   }, []);
 
   const handleCounterChange = (id, e) => {
@@ -29,6 +35,8 @@ export default function HabitsScreen() {
     }
     axios.patch(`/habits/${id}`, requestBody)
   }
+
+  if (loading) return <UnifiedView><Text>Loading...</Text></UnifiedView>
 
   return (
     <ScrollView style={styles.container}>

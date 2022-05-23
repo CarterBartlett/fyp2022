@@ -11,7 +11,7 @@ import MultiButtonGroup from '../../components/MultiButtonGroup';
 import * as yup from 'yup';
 
 const validationSchema = yup.object().shape({
-  title: yup.string().min(3).required()
+  title: yup.string().min(3).required().label('Title')
 });
 
 export default function NewTodoScreen({navigation}) {
@@ -30,7 +30,6 @@ export default function NewTodoScreen({navigation}) {
     await axios.post('/todos', objectToSend);
     navigation.reset({index:0, routes:[{name:'Dashboard'}]})
   }
-
   
   return (
     <ScrollView>
@@ -65,7 +64,7 @@ export default function NewTodoScreen({navigation}) {
                 onPress={()=>setFieldValue('useDueDate', !values.useDueDate)}/>
 
               {values.useDueDate && <>
-                <Text style={{fontSize:24, textAlign:'center'}}>{formatDate(values.due, 'eeee do MMMM')} at {formatDate(values.due, 'K:mmaaa')}</Text>
+                <Text style={{fontSize:24, textAlign:'center'}}>{formatDate(values.due, 'eeee do MMMM')} at {formatDate(values.due, 'hh:mmaaa')}</Text>
                 <DatePicker
                   mode="datetime"
                   onChange={(val)=>setFieldValue(

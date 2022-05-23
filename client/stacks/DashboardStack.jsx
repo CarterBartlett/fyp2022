@@ -30,7 +30,6 @@ const notificationCount = 0; //TODO - Add notification count
 const AppName = consts.APPNAME;
 
 export default function DashboardStack(Stack) {
-
   return (
     <Stack.Group screenOptions={{headerShown: true}}>
       <Stack.Screen name="Dashboard" component={DashboardScreen} options={{headerShown: false}} />
@@ -44,6 +43,17 @@ export default function DashboardStack(Stack) {
 
 function DashboardScreen({navigation}) {
   const [fabOpenState, setFabOpenState] = useState(false);
+
+  const fabActions = __DEV__ ? 
+  [
+    {label: "Tasks", icon: 'file-outline', onPress: ()=>navigation.navigate('NewTask')},
+    {label: "To-do", icon: 'checkbox-marked-circle-outline', onPress: ()=>navigation.navigate('NewTodo')},
+    {label: "Habits", icon: 'account-edit', onPress: ()=>navigation.navigate('NewHabit')}
+  ] : 
+  [
+    {label: "To-do", icon: 'checkbox-marked-circle-outline', onPress: ()=>navigation.navigate('NewTodo')},
+    {label: "Habits", icon: 'account-edit', onPress: ()=>navigation.navigate('NewHabit')}
+  ];
 
   return (
     <>
@@ -61,24 +71,18 @@ function DashboardScreen({navigation}) {
         </>
         }}>
         <Drawer.Screen name="Home" component={HomeScreen} options={{unmountOnBlur:true,drawerIcon:(props)=><DrawerIcon icon="home" {...props} />}} />
-        <Drawer.Screen name="Todo" component={TodosScreen} options={{drawerIcon:(props)=><DrawerIcon icon="checkbox-marked-circle-outline" {...props} />}}/>
+        <Drawer.Screen name="To-dos" component={TodosScreen} options={{drawerIcon:(props)=><DrawerIcon icon="checkbox-marked-circle-outline" {...props} />}}/>
         <Drawer.Screen name="Habits" component={HabitsScreen} options={{drawerIcon:(props)=><DrawerIcon icon="account-edit" {...props} />}}/>
         {__DEV__ && <Drawer.Screen name="Tasks" component={TasksScreen} options={{drawerIcon:(props)=><DrawerIcon icon="file-outline" {...props} />}}/>}
         {__DEV__ && <Drawer.Screen name="Debug" component={DebugScreen} options={{drawerIcon:(props)=><DrawerIcon icon="hammer-wrench" {...props} />}}/>}
       </Drawer.Navigator>
-
-      <Portal>
-        <FAB.Group
-          icon="plus"
-          actions={[
-            {label: "Tasks", icon: 'file-outline', onPress: ()=>navigation.navigate('NewTask')},
-            {label: "To-do", icon: 'checkbox-marked-circle-outline', onPress: ()=>navigation.navigate('NewTodo')},
-            {label: "Habits", icon: 'account-edit', onPress: ()=>navigation.navigate('NewHabit')}
-          ]}
-          onStateChange={()=>setFabOpenState(!fabOpenState)}
-          open={fabOpenState}
-        />
-      </Portal>
+      
+      <FAB.Group
+        icon="plus"
+        actions={fabActions}
+        onStateChange={()=>setFabOpenState(!fabOpenState)}
+        open={fabOpenState}
+      />
       
     </>
   )

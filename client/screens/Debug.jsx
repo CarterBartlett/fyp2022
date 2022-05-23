@@ -10,7 +10,7 @@ export default function DebugScreen() {
     const [loading, setLoading] = useState(true);
     const {user, setUser} = useContext(UserContext);
     
-    useEffect(async ()=>{
+    useEffect(()=>{
         setLoading(false);
     },[])
 
