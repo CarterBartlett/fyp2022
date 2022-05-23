@@ -116,7 +116,7 @@ function CustomDrawer(props) {
       </DrawerContentScrollView>
 
       <View style={styles.drawerFooter}>
-        <Text style={styles.loggedInAsText}>Logged in as {user?.firstName}</Text>
+        <Text style={styles.loggedInAsText}>Logged in as {user?.firstName} {user?.lastName}</Text>
         <>
           {__DEV__ && <IconButton color={Colors.white} icon="sync" onPress={()=>console.log("Sync")} />}
           {__DEV__ && <IconButton color={Colors.white} icon="cog" onPress={()=>navigation.navigate('Settings')} />}
@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
     padding: 8,
     flexGrow: 1,
     marginTop: 'auto',
-    marginBottom: 'auto'
+    marginBottom: 'auto',
+    flexShrink: 1
   }
 })
