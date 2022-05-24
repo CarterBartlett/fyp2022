@@ -22,7 +22,12 @@ module.exports = app => {
     app.use(session({
         name: 'LifeOrganiserApp',
         keys: [process.env.SESSION_SECRET],
-        cookie: {secure: true, maxAge: 30 * 24 * 60 * 60 * 1000}
+        cookie: {
+            secure: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            sameSite: 'none',
+            httpOnly: true
+        }
     }));
     
     app.use(passport.initialize());
