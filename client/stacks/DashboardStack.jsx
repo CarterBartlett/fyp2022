@@ -19,7 +19,7 @@ import { UserContext } from '../context/User';
 import { View } from 'react-native';
 import { FAB, Colors, IconButton, Text } from 'react-native-paper';
 
-import consts from '../consts.json';
+import {APPNAME} from '@env';
 import useDeviceSpecs from '../hooks/Device';
 
 import axios from 'axios';
@@ -27,7 +27,7 @@ import axios from 'axios';
 const Drawer = createDrawerNavigator();
 const notificationCount = 0; //TODO - Add notification count
 
-const AppName = consts.APPNAME;
+const AppName = APPNAME;
 
 export default function DashboardStack(Stack) {
   return (

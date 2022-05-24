@@ -15,11 +15,10 @@ import { UserContext } from './context/User';
 import { AppStateContext } from './context/AppState';
 import Toast from 'react-native-toast-message';
 
-import consts from './consts.json';
-
+import {API_BASEPATH} from '@env';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL=consts.API_BASEPATH;
+axios.defaults.baseURL = API_BASEPATH || 'http://localhost:3000';
 
 const Stack = createStackNavigator();
 
