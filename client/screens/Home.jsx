@@ -50,27 +50,27 @@ export default function HomeScreen() {
                 ]}>
                 <View style={{marginLeft: 'auto', marginRight: 'auto', marginTop: 10, marginBottom: 10}}>
                     <CircularProgressBase
-                        value={summaryData && summaryData.tasks ? (summaryData?.tasks?.complete?.total / summaryData?.tasks?.total)*100 : 0}
-                        radius={150}
-                        activeStrokeColor={circleColors.task.active}
-                        inActiveStrokeColor={circleColors.task.inactive}
-                        activeStrokeWidth={25}
-                        inActiveStrokeWidth={25}
-                        inActiveStrokeOpacity={0.2}
-                        >
-                        <CircularProgressBase
-                            value={summaryData && summaryData.todos ? (summaryData?.todos?.complete?.total / summaryData?.todos?.total)*100 : 0}
-                            radius={125}
-                            activeStrokeColor={circleColors.todo.active}
-                            inActiveStrokeColor={circleColors.todo.inactive}
+                            value={summaryData && summaryData.tasks ? (summaryData?.tasks?.complete?.total / summaryData?.tasks?.total)*100 : 0}
+                            radius={150}
+                            activeStrokeColor={circleColors.task.active}
+                            inActiveStrokeColor={circleColors.task.inactive}
                             activeStrokeWidth={25}
                             inActiveStrokeWidth={25}
                             inActiveStrokeOpacity={0.2}
-                        >
-                            <Text style={styles.circleProgressText}>{summaryData.tasks ? `${summaryData.tasks.complete.total}/${summaryData.tasks.total}` : 'N/A'} tasks</Text>
-                            <Text style={styles.circleProgressText}>{summaryData.todos ? `${summaryData.todos.complete.total}/${summaryData.todos.total}` : 'N/A'} to-dos</Text>
+                            >
+                            <CircularProgressBase
+                                value={summaryData && summaryData.todos ? (summaryData?.todos?.complete?.total / summaryData?.todos?.total)*100 : 0}
+                                radius={125}
+                                activeStrokeColor={circleColors.todo.active}
+                                inActiveStrokeColor={circleColors.todo.inactive}
+                                activeStrokeWidth={25}
+                                inActiveStrokeWidth={25}
+                                inActiveStrokeOpacity={0.2}
+                            >
+                                <Text style={styles.circleProgressText}>{summaryData.tasks ? `${summaryData.tasks.complete.total}/${summaryData.tasks.total}` : 'N/A'} tasks</Text>
+                                <Text style={styles.circleProgressText}>{summaryData.todos ? `${summaryData.todos.complete.total}/${summaryData.todos.total}` : 'N/A'} to-dos</Text>
+                            </CircularProgressBase>
                         </CircularProgressBase>
-                    </CircularProgressBase>
                 </View>
 
                 <View style={{flexGrow:1}}>

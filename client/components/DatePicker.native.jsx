@@ -22,8 +22,6 @@ export default function DatePickerNative(props) {
     function changeValue(e) {
         const newComponentValue = new Date(componentValue);
 
-        console.log({e});
-
         if (e.date) {
             const dateVal = startOfDay(e.date);
             newComponentValue.setFullYear(dateVal.getFullYear());

@@ -17,7 +17,7 @@ import SettingsScreen from '../screens/Settings/Settings';
 
 import { UserContext } from '../context/User';
 import { View } from 'react-native';
-import { FAB, Colors, IconButton, Portal, Text } from 'react-native-paper';
+import { FAB, Colors, IconButton, Text } from 'react-native-paper';
 
 import consts from '../consts.json';
 import useDeviceSpecs from '../hooks/Device';

@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 import LoginStack from './stacks/LoginStack';
 import DashboardStack from './stacks/DashboardStack';
@@ -84,6 +84,7 @@ const theme = {
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#3498db'
+    primary: '#3498db',
+    //accent: '#f1c40f',
   },
 };
