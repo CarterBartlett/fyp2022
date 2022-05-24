@@ -2,11 +2,11 @@ const express = require('express');
 const passport = require('passport');
 const path = require('path');
 const _ = require('lodash');
-const session = require('cookie-session');
+//const cookieSession = require('cookie-cookieSession');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
-const connection = require('./config/database');
-
-const PRODUCTION = process.env.NODE_ENV==='production';
+const mongoConnection = require('./config/database');
 
 module.exports = app => {
 
@@ -20,7 +20,7 @@ module.exports = app => {
     app.use(express.static(path.join(__dirname, 'public')));
 
     app.set('trust proxy', 1);
-    app.use(session({
+    /*app.use(cookieSession({
         name: 'LifeOrganiserApp',
         keys: [process.env.SESSION_SECRET],
         cookie: {
@@ -29,6 +29,19 @@ module.exports = app => {
             sameSite: 'none',
             httpOnly: true
         }
+    }));*/
+    app.use(session({
+        secret: process.env.SESSION_SECRET,
+        store: MongoStore.create(mongoConnection),
+        saveUninitialized: true,
+        cookie: {
+            secure: true,
+            httpOnly: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            sameSite: 'none'
+        },
+        resave: false,
+        proxy: true
     }));
     
     app.use(passport.initialize());
