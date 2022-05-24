@@ -2,13 +2,12 @@ const express = require('express');
 const passport = require('passport');
 const path = require('path');
 const _ = require('lodash');
-//const cookieSession = require('cookie-cookieSession');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
 const mongoConnection = require('./config/database');
 
-module.exports = app => {
+module.exports = async app => {
 
     app.use(require('cors')({credentials: true, origin: true}))
     app.use(require('helmet')());
@@ -19,21 +18,11 @@ module.exports = app => {
     app.use(express.json());
     app.use(express.static(path.join(__dirname, 'public')));
 
-    app.set('trust proxy', 1);
-    /*app.use(cookieSession({
-        name: 'LifeOrganiserApp',
-        keys: [process.env.SESSION_SECRET],
-        cookie: {
-            secure: true,
-            maxAge: 30 * 24 * 60 * 60 * 1000,
-            sameSite: 'none',
-            httpOnly: true
-        }
-    }));*/
+    app.set('trust proxy', 1);    
     app.use(session({
         secret: process.env.SESSION_SECRET,
         store: MongoStore.create({
-            mongooseConnection: mongoConnection,
+            mongoUrl: process.env.MONGO_URI,
             collectionName: 'sessions'
         }),
         saveUninitialized: true,
@@ -46,6 +35,8 @@ module.exports = app => {
         resave: false,
         proxy: true
     }));
+
+    console.log('Session');
     
     app.use(passport.initialize());
     app.use(passport.session());
