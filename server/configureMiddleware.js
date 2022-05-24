@@ -19,6 +19,7 @@ module.exports = app => {
     app.use(express.json());
     app.use(express.static(path.join(__dirname, 'public')));
 
+    app.set('trust proxy', 1);
     app.use(session({
         name: 'LifeOrganiserApp',
         keys: [process.env.SESSION_SECRET],
