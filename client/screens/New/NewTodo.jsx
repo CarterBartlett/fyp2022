@@ -11,7 +11,8 @@ import MultiButtonGroup from '../../components/MultiButtonGroup';
 import * as yup from 'yup';
 
 const validationSchema = yup.object().shape({
-  title: yup.string().min(3).required().label('Title')
+  title: yup.string().min(3).max(30).required().label('Title'),
+  description: yup.string().max(200).label('Description')
 });
 
 export default function NewTodoScreen({navigation}) {

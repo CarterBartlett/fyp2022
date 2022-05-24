@@ -30,7 +30,7 @@ export default function NewHabitScreen() {
           <TextInput
             value={values.title}
             label="Title"
-            onChange={handleChange('title')}
+            onChangeText={handleChange('title')}
             onBlur={handleBlur('title')}
           />
           <HelperText type="error" visible={errors.title && touched.title}>{errors.title}</HelperText>
@@ -51,5 +51,6 @@ export default function NewHabitScreen() {
 }
 
 const validationSchema = yup.object().shape({
-  title: yup.string().min(3).required().label('Title')
+  title: yup.string().min(3).max(30).required().label('Title'),
+  description: yup.string().max(200).label('Description')
 })

@@ -23,7 +23,6 @@ axios.defaults.baseURL = API_BASEPATH || 'http://localhost:3000';
 const Stack = createStackNavigator();
 
 export default function App() {
-
   const [user, setUser] = useState(null);
   const [appState, setAppState] = useState({
     loading: true
