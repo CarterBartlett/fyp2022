@@ -27,7 +27,7 @@ import axios from 'axios';
 const Drawer = createDrawerNavigator();
 const notificationCount = 0; //TODO - Add notification count
 
-const AppName = APPNAME;
+const AppName = APPNAME || 'AppName';
 
 export default function DashboardStack(Stack) {
   return (

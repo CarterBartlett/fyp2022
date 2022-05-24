@@ -39,8 +39,10 @@ export default function HomeScreen() {
 
     return (
         <UnifiedView style={styles.container}>
-            <Text style={styles.title}>Welcome {user?.firstName}!</Text>
-            <Text style={styles.subtitle}>Here's a quick summary of things to keep an eye on...</Text>
+            <View style={{paddingLeft: 12}}>
+                <Text style={styles.title}>Welcome {user?.firstName}!</Text>
+                <Text style={styles.subtitle}>Here's a quick summary of things to keep an eye on...</Text>
+            </View>
             <View style={[{},
                     (deviceType=='smartphone') ? {
                         flexDirection: 'column'
@@ -74,20 +76,21 @@ export default function HomeScreen() {
                 </View>
 
                 <View style={{flexGrow:1}}>
-                    <View>
+                    <View style={styles.infoContainer}>
                         <Text style={styles.subtitle}>Todos</Text>
                         <Text>You have {summaryData?.todos?.incomplete?.dueNextWeek} todos due in within the next week!</Text>
                         <Text>You have completed {summaryData?.todos?.complete?.completedInLastWeek} todos in the last week!</Text>
                     </View>
 
-                    <View>
+                    <View style={styles.infoContainer}>
                         <Text style={styles.subtitle}>Tasks</Text>
                         <Text>You have X tasks due in within the next week!</Text>
                         <Text>You have completed X tasks this week!</Text>
                     </View>
 
-                    <View>
+                    <View style={styles.infoContainer}>
                         <Text style={styles.subtitle}>Habits</Text>
+                        <Text>You are tracking {summaryData?.habits?.total} habits</Text>
                     </View>
                 </View>
             </View>
@@ -97,7 +100,8 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        paddingLeft: 12,
+        paddingBottom: 12,
+        paddingTop: 12,
         maxWidth: 2000,
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -114,5 +118,8 @@ const styles = StyleSheet.create({
     circleProgressText: {
         fontSize: 24,
 
+    },
+    infoContainer: {
+        padding: 12
     }
 })

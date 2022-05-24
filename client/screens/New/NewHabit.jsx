@@ -1,20 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Text, TextInput, Button, HelperText } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 
-export default function NewHabitScreen() {
+import { AppStateContext } from '../../context/AppState';
+
+export default function NewHabitScreen({navigation}) {
   const handleSubmit = async (values, formikBag) => {
+    setLoading(true);
     const objectToSend = {
       title: values.title,
       description: values.description,
     }
 
     const req = await axios.post('/habits', objectToSend);
+    setLoading(false);
     navigation.reset({index:0, routes:[{name:'Dashboard'}]})
   }
+
+  const [appState, setAppState] = useState(AppStateContext);
+  const setLoading = (loading) => setAppState({...appState, loading});
 
   return (
     <ScrollView>
@@ -43,7 +50,7 @@ export default function NewHabitScreen() {
           />
           <HelperText type="error" visible={errors.description && touched.description}>{errors.description}</HelperText>
 
-          <Button mode="contained" onPress={handleSubmit} disabled={!isValid || !dirty}>Create New Habit</Button>
+          <Button mode="contained" onPress={handleSubmit} disabled={!isValid || !dirty || appState.loading}>Create New Habit</Button>
         </>}
       </Formik>
     </ScrollView>
