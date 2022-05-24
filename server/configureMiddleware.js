@@ -32,7 +32,10 @@ module.exports = app => {
     }));*/
     app.use(session({
         secret: process.env.SESSION_SECRET,
-        store: MongoStore.create(mongoConnection),
+        store: MongoStore.create({
+            mongooseConnection: mongoConnection,
+            collectionName: 'sessions'
+        }),
         saveUninitialized: true,
         cookie: {
             secure: true,
