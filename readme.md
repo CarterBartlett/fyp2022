@@ -17,3 +17,16 @@ If you wish to open client/server in two seperate windows, you may use the follo
 - `npm run start:client:dev`
 - `npm run start:server`
 - `npm run start:server:dev`
+
+## Environment variables
+Environment variables need to be provided to both the frontend and the backend seperately. These can be passed in as usual or a `.env` file can be placed in the root directory of the "server" and "client" sections. Provided below are sample `.env` files
+
+### client/.env
+API_BASEPATH=https://backend-server.com
+APPNAME=MyAppName
+
+### server/.env
+```
+MONGO_URI=mongodb+srv://username:passowrd@mongouri.com/dbname?retryWrites=true&w=majority
+SESSION_SECRET=RandomLongString
+```
